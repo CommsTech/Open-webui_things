@@ -1,0 +1,206 @@
+# Modern OpenWebUI Tools and Functions - Configuration
+# This file contains all configuration options for the modern tools
+
+# Ollama Configuration
+ollama:
+  host: "localhost"  # Ollama host address
+  port: 11434        # Ollama port number
+  api_version: "v1"  # API version to use
+  default_model: "llama3.2:8b"  # Default model to use
+  fallback_models:   # Fallback models if primary fails
+    - "llama3.2:8b"
+    - "llama3.1:8b"
+    - "mistral:7b"
+    - "codellama:7b"
+  
+  # Model-specific settings
+  models:
+    llama3.2:8b:
+      temperature: 0.7
+      max_tokens: 2000
+      top_p: 0.9
+    mistral:7b:
+      temperature: 0.5
+      max_tokens: 1500
+      top_p: 0.85
+
+# Security Configuration
+security:
+  enable_ssl: true           # Enable SSL verification
+  ssl_context: null          # Custom SSL context (null for default)
+  timeout: 30                # Request timeout in seconds
+  max_retries: 3             # Maximum retry attempts
+  rate_limit:                # Rate limiting configuration
+    max_calls: 100           # Maximum calls per time window
+    time_window: 60          # Time window in seconds
+  
+  # Circuit breaker configuration
+  circuit_breaker:
+    failure_threshold: 5      # Failures before opening circuit
+    recovery_timeout: 60      # Seconds before attempting recovery
+
+# Performance Configuration
+performance:
+  connection_pool_size: 100      # Connection pool size
+  max_concurrent_requests: 10    # Maximum concurrent requests
+  enable_caching: true           # Enable response caching
+  cache_ttl: 300                 # Cache TTL in seconds
+  
+  # Memory management
+  memory:
+    max_short_term: 20           # Maximum short-term memory items
+    max_long_term: 1000          # Maximum long-term memory items
+    cleanup_interval: 3600       # Memory cleanup interval in seconds
+
+# Feature Configuration
+features:
+  enable_function_calling: true  # Enable function calling support
+  enable_streaming: true         # Enable streaming responses
+  enable_multimodal: false       # Enable multimodal support
+  
+  # Web search configuration
+  web_search:
+    engines:                     # Search engines to use
+      - "google"
+      - "duckduckgo"
+      - "brave"
+    limit: 5                     # Maximum search results
+    enable_scraping: true        # Enable web content scraping
+    max_content_length: 3000     # Maximum content length for processing
+  
+  # Emotional intelligence
+  emotional_intelligence:
+    enable: true                 # Enable emotional understanding
+    sensitivity: 0.7             # Emotional sensitivity level
+    enable_empathy: true         # Enable empathetic responses
+    tone_adaptation: true        # Adapt tone based on emotional state
+  
+  # Memory and learning
+  memory_learning:
+    enable_memory: true          # Enable memory retention
+    enable_autolearn: true       # Enable automatic learning
+    learning_rate: 0.1           # Learning rate for updates
+    confidence_threshold: 0.7    # Minimum confidence threshold
+  
+  # Reasoning capabilities
+  reasoning:
+    enable_advanced: true        # Enable advanced reasoning
+    reasoning_depth: "balanced"  # Depth: shallow, balanced, deep
+    enable_pattern_recognition: true  # Enable pattern recognition
+
+# Logging Configuration
+logging:
+  level: "INFO"                  # Log level: DEBUG, INFO, WARNING, ERROR
+  format: "json"                 # Log format: json, text
+  file: "logs/openwebui.log"     # Log file path
+  max_size: "100MB"             # Maximum log file size
+  backup_count: 5                # Number of backup files
+  
+  # Structured logging
+  structured:
+    enable: true                 # Enable structured logging
+    include_timestamp: true      # Include timestamps
+    include_level: true          # Include log levels
+    include_context: true        # Include context information
+
+# Monitoring Configuration
+monitoring:
+  enable_metrics: true           # Enable metrics collection
+  metrics_port: 9090            # Metrics server port
+  health_check_interval: 30     # Health check interval in seconds
+  
+  # Prometheus metrics
+  prometheus:
+    enable: true                 # Enable Prometheus metrics
+    endpoint: "/metrics"         # Metrics endpoint
+  
+  # Health checks
+  health_checks:
+    ollama_connection: true      # Check Ollama connection
+    memory_usage: true           # Check memory usage
+    response_time: true          # Monitor response times
+
+# Environment-specific overrides
+environments:
+  development:
+    logging:
+      level: "DEBUG"
+    performance:
+      connection_pool_size: 20
+      max_concurrent_requests: 5
+  
+  production:
+    logging:
+      level: "WARNING"
+    security:
+      enable_ssl: true
+      timeout: 60
+    performance:
+      connection_pool_size: 200
+      max_concurrent_requests: 50
+  
+  testing:
+    logging:
+      level: "DEBUG"
+    features:
+      enable_web_search: false
+      enable_scraping: false
+    ollama:
+      default_model: "test-model"
+
+# Advanced Configuration
+advanced:
+  # Custom function definitions
+  custom_functions:
+    enable: true                 # Enable custom function definitions
+    path: "functions/"           # Path to custom function files
+  
+  # Plugin system
+  plugins:
+    enable: true                 # Enable plugin system
+    path: "plugins/"             # Path to plugin files
+    auto_load: true              # Auto-load plugins
+  
+  # API extensions
+  api_extensions:
+    enable: true                 # Enable API extensions
+    custom_endpoints: true       # Allow custom API endpoints
+    rate_limiting: true          # Enable API rate limiting
+  
+  # Integration settings
+  integrations:
+    openwebui:
+      version: "0.6.26+"         # Minimum OpenWebUI version
+      features:
+        - "granular_permissions"
+        - "custom_reasoning_tags"
+        - "tool_server_integration"
+        - "function_calling"
+    
+    ollama:
+      version: "0.11.8+"         # Minimum Ollama version
+      features:
+        - "function_calling"
+        - "streaming"
+        - "structured_outputs"
+        - "multimodal"
+
+# Migration and compatibility
+migration:
+  # Legacy support
+  legacy_support:
+    enable: false                # Enable legacy API support
+    deprecated_features: false   # Allow deprecated features
+  
+  # Version compatibility
+  compatibility:
+    min_openwebui_version: "0.6.26"
+    min_ollama_version: "0.11.8"
+    python_version: "3.8+"
+  
+  # Feature flags for gradual rollout
+  feature_flags:
+    modern_api: true             # Enable modern API features
+    enhanced_security: true      # Enable enhanced security
+    performance_optimizations: true  # Enable performance optimizations
+    advanced_capabilities: true  # Enable advanced capabilities
